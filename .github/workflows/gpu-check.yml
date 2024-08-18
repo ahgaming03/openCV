@@ -1,0 +1,21 @@
+name: GPU Info Check
+
+on: [push]
+
+jobs:
+    gpu_info:
+        runs-on: self-hosted # Ensure this is a runner with a GPU
+
+        steps:
+            - name: Check out the code
+              uses: actions/checkout@v3
+
+            - name: Display GPU Info
+              run: |
+                  nvidia-smi > gpu_info.txt
+
+            - name: Upload GPU Info
+              uses: actions/upload-artifact@v3
+              with:
+                  name: gpu-info
+                  path: gpu_info.txt
